@@ -49,7 +49,7 @@
             </div>
         </div>
         </div>
-  </nav>>
+  </nav>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -86,30 +86,25 @@
                                         <!-- Formulario para agregar datos -->
                                         <form id="formularioCliente" method="post">
                                             <div class="mb-3">
-                                                <label for="name" class="form-label">Nombre</label>
-                                                <input type="text" class="form-control" id="name" name="name" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="apellido" class="form-label">Apellido</label>
-                                                <input type="text" class="form-control" id="apellido" name="apellido" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" name="email" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="edad" class="form-label">Edad</label>
-                                                <input type="number" class="form-control" id="edad" name="edad" required>
-                                            </div>
-                                            <div class="mb-3">
                                                 <label for="fecha" class="form-label">Fecha</label>
                                                 <input type="date" class="form-control" id="fecha" name="fecha" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="cedula" class="form-label">Cedula</label>
-                                                <input type="number" class="form-control" id="cedula" name="cedula" required>
+                                                <label for="monto" class="form-label">Monto</label>
+                                                <input type="text" class="form-control" id="monto" name="monto" required>
                                             </div>
-                                            
+                                            <div class="mb-3">
+                                                <label for="estado" class="form-label">Estado</label>
+                                                <input type="text" class="form-control" id="estado" name="estado">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="total" class="form-label">Total</label>
+                                                <input type="text" class="form-control" id="total" name="total">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="direccion" class="form-label">Dirección</label>
+                                                <input type="number" class="form-control" id="direccion" name="direccion">
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -126,13 +121,14 @@
                 <br><br>
                 <table class="table">
                     <thead class="table-danger">
-                      <td>ID</td>
-                      <td>Nombre</td>
-                      <td>Apellido</td>
-                      <td>Email</td>
-                      <td>Edad</td>
-                      <td>Fecha</td>
-                      <td>Cedula</td>
+                      <tr>
+                        <td>ID</td>
+                        <td>Fecha</td>
+                        <td>Monto</td>
+                        <td>Estado</td>
+                        <td>Total</td>
+                        <td>Dirección</td>
+                      </tr>
                     </thead>
                     <tbody id="cuerpoTable">
                       
@@ -146,27 +142,22 @@
     </div>
     <br>
 
-
-    
-
-
     <script>
         function traerDatos() {
             $.ajax({
                 type: "GET",
-                url: "http://3.147.74.10:3001/api/clientes", // URL de ejemplo de la API
+                url: "http://3.147.74.10:3001/api/pedidos", // URL de ejemplo de la API
                 success: function(data) {
                     var cuerpoTable = $("#cuerpoTable");
                     cuerpoTable.empty(); // Limpiar la tabla antes de agregar nuevos datos
                     data.forEach(function(cliente) {
                         var fila = `<tr>
                                         <td>${cliente.id}</td>
-                                        <td>${cliente.name}</td>
-                                        <td>${cliente.email}</td>
-                                        <td>${cliente.apellido}</td>
-                                        <td>${cliente.edad|| 'N/A'}</td> 
-                                        <td>${cliente.fecha|| 'N/A'}</td> 
-                                        <td>${cliente.cedula|| 'N/A'}</td> 
+                                        <td>${cliente.fecha || 'N/A'}</td>
+                                        <td>${cliente.monto || 'N/A'}</td>
+                                        <td>${cliente.estado || 'N/A'}</td>
+                                        <td>${cliente.total || 'N/A'}</td>
+                                        <td>${cliente.direccion || 'N/A'}</td> 
                                     </tr>`;
                         cuerpoTable.append(fila);
                     });
@@ -182,33 +173,29 @@
         $("#formularioCliente").submit(function(event) {
             event.preventDefault(); // Evitar el comportamiento por defecto del formulario
 
-            var name = $("#name").val();
-            var apellido = $("#apellido").val();
-            var email = $("#email").val();
-            var edad = parseInt($("#edad").val());
             var fecha = $("#fecha").val();
-            var cedula = parseInt($("#cedula").val());
+            var monto = $("#monto").val();
+            var estado = $("#estado").val();
+            var total = $("#total").val();
+            var direccion = parseInt($("#direccion").val(), 10);
 
             console.log("Datos a enviar:", {
-                name: name,
-                apellido: apellido,
-                email: email,
-                edad: edad,
                 fecha: fecha,
-                cedula: cedula
-
+                monto: monto,
+                estado: estado,
+                total: total,
+                direccion: direccion
             });
 
             $.ajax({
                 type: "POST",
-                url: "http://3.147.74.10:3001/api/clientes", // URL para agregar datos
+                url: "http://3.147.74.10:3001/api/pedidos", // URL para agregar datos
                 data: JSON.stringify({
-                    name: name,
-                    apellido: apellido,
-                    email: email,
-                    edad: edad,
                     fecha: fecha,
-                    cedula: cedula
+                    monto: monto,
+                    estado: estado,
+                    total: total,
+                    direccion: direccion
                 }),
                 contentType: "application/json; charset=utf-8",
                 success: function(response) {
@@ -230,3 +217,4 @@
         });
     </script>
 </body>
+</html>

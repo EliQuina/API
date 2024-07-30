@@ -49,7 +49,7 @@
             </div>
         </div>
         </div>
-  </nav>>
+  </nav>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -62,12 +62,12 @@
         <div class="row">
             <div class="col-md-12">
                 <br>
-                <center><h1>Listado de Clientes</h1></center>
+                <center><h1>Listado de Empleados</h1></center>
                 <br>
                 <!-- Full screen modal -->
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Agregar Cliente
+                Agregar Empleado
                 </button>
             
                 <!-- Modal -->
@@ -75,7 +75,7 @@
                     <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Clientes</h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Empleado</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -84,32 +84,35 @@
                                     <div class="col-md-2"></div>
                                     <div class="col-md-8">
                                         <!-- Formulario para agregar datos -->
-                                        <form id="formularioCliente" method="post">
+                                        <form id="formularioEmpleado" method="post">
                                             <div class="mb-3">
-                                                <label for="name" class="form-label">Nombre</label>
-                                                <input type="text" class="form-control" id="name" name="name" required>
+                                                <label for="nombre" class="form-label">Nombre</label>
+                                                <input type="text" class="form-control" id="nombre" name="nombre" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="apellido" class="form-label">Apellido</label>
-                                                <input type="text" class="form-control" id="apellido" name="apellido" required>
+                                                <label for="telefono" class="form-label">Teléfono</label>
+                                                <input type="text" class="form-control" id="telefono" name="telefono" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" name="email" required>
+                                                <input type="email" class="form-control" id="email" name="email">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="edad" class="form-label">Edad</label>
-                                                <input type="number" class="form-control" id="edad" name="edad" required>
+                                                <label for="salario" class="form-label">Salario</label>
+                                                <input type="text" class="form-control" id="salario" name="salario">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="fecha" class="form-label">Fecha</label>
-                                                <input type="date" class="form-control" id="fecha" name="fecha" required>
+                                                <label for="fechafechacontrato" class="form-label">Fecha</label>
+                                                <input type="date" class="form-control" id="fechacontrato" name="fechacontrato">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="cedula" class="form-label">Cedula</label>
-                                                <input type="number" class="form-control" id="cedula" name="cedula" required>
+                                                <label for="direccion" class="form-label">Dirección</label>
+                                                <input type="text" class="form-control" id="direccion" name="direccion">
                                             </div>
-                                            
+                                            <div class="mb-3">
+                                                <label for="estado" class="form-label">Estado</label>
+                                                <input type="text" class="form-control" id="estado" name="estado">
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -117,7 +120,7 @@
                         </div>
                         <div class="modal-footer">
                         <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" form="formularioCliente" class="btn btn-primary">Agregar Cliente</button>
+                        <button type="submit" form="formularioEmpleado" class="btn btn-primary">Agregar Empleado</button>
                         
                         </div>
                     </div>
@@ -126,13 +129,16 @@
                 <br><br>
                 <table class="table">
                     <thead class="table-danger">
-                      <td>ID</td>
-                      <td>Nombre</td>
-                      <td>Apellido</td>
-                      <td>Email</td>
-                      <td>Edad</td>
-                      <td>Fecha</td>
-                      <td>Cedula</td>
+                      <tr>
+                        <td>ID</td>
+                        <td>Nombre</td>
+                        <td>Teléfono</td>
+                        <td>Email</td>
+                        <td>Salario</td>
+                        <td>Fecha</td>
+                        <td>Dirección</td>
+                        <td>Estado</td>
+                      </tr>
                     </thead>
                     <tbody id="cuerpoTable">
                       
@@ -146,27 +152,24 @@
     </div>
     <br>
 
-
-    
-
-
     <script>
         function traerDatos() {
             $.ajax({
                 type: "GET",
-                url: "http://3.147.74.10:3001/api/clientes", // URL de ejemplo de la API
+                url: "http://3.147.74.10:3001/api/proveedores", // URL de ejemplo de la API
                 success: function(data) {
                     var cuerpoTable = $("#cuerpoTable");
                     cuerpoTable.empty(); // Limpiar la tabla antes de agregar nuevos datos
-                    data.forEach(function(cliente) {
+                    data.forEach(function(proveedor) {
                         var fila = `<tr>
-                                        <td>${cliente.id}</td>
-                                        <td>${cliente.name}</td>
-                                        <td>${cliente.email}</td>
-                                        <td>${cliente.apellido}</td>
-                                        <td>${cliente.edad|| 'N/A'}</td> 
-                                        <td>${cliente.fecha|| 'N/A'}</td> 
-                                        <td>${cliente.cedula|| 'N/A'}</td> 
+                                        <td>${proveedor.id || 'N/A'}</td>
+                                        <td>${proveedor.nombre || 'N/A'}</td>
+                                        <td>${proveedor.telefono || 'N/A'}</td>
+                                        <td>${proveedor.email || 'N/A'}</td>
+                                        <td>${proveedor.salario || 'N/A'}</td>
+                                        <td>${proveedor.fechacontrato || 'N/A'}</td>
+                                        <td>${proveedor.direccion || 'N/A'}</td>
+                                        <td>${proveedor.estado || 'N/A'}</td>
                                     </tr>`;
                         cuerpoTable.append(fila);
                     });
@@ -179,43 +182,45 @@
             });
         }
 
-        $("#formularioCliente").submit(function(event) {
+        $("#formularioEmpleado").submit(function(event) {
             event.preventDefault(); // Evitar el comportamiento por defecto del formulario
 
-            var name = $("#name").val();
-            var apellido = $("#apellido").val();
+            var nombre = $("#nombre").val();
+            var telefono = $("#telefono").val();
             var email = $("#email").val();
-            var edad = parseInt($("#edad").val());
-            var fecha = $("#fecha").val();
-            var cedula = parseInt($("#cedula").val());
+            var salario = $("#salario").val();
+            var fechacontrato = $("#fechacontrato").val();
+            var direccion = $("#direccion").val();
+            var estado = $("#estado").val();
 
             console.log("Datos a enviar:", {
-                name: name,
-                apellido: apellido,
+                nombre: nombre,
+                telefono: telefono,
                 email: email,
-                edad: edad,
-                fecha: fecha,
-                cedula: cedula
-
+                salario: salario,
+                fechacontrato: fechacontrato,
+                direccion: direccion,
+                estado: estado
             });
 
             $.ajax({
                 type: "POST",
-                url: "http://3.147.74.10:3001/api/clientes", // URL para agregar datos
+                url: "http://3.147.74.10:3001/api/proveedores", // URL para agregar datos
                 data: JSON.stringify({
-                    name: name,
-                    apellido: apellido,
+                    nombre: nombre,
+                    telefono: telefono,
                     email: email,
-                    edad: edad,
-                    fecha: fecha,
-                    cedula: cedula
+                    salario: salario,
+                    fechacontrato: fechacontrato,
+                    direccion: direccion,
+                    estado: estado
                 }),
                 contentType: "application/json; charset=utf-8",
                 success: function(response) {
                     $("#staticBackdrop").modal('hide'); // Cerrar el modal
-                    alert("Cliente agregado con éxito");
-                    traerDatos(); // Actualizar la tabla después de agregar un cliente
-                    $("#formularioCliente")[0].reset(); // Limpiar el formulario
+                    alert("Empleado agregado con éxito");
+                    traerDatos(); // Actualizar la tabla después de agregar un empleado
+                    $("#formularioEmpleado")[0].reset(); // Limpiar el formulario
                 },
                 error: function(xhr, status, error) {
                     console.error("Error al agregar", status, error);
@@ -230,3 +235,4 @@
         });
     </script>
 </body>
+</html>
